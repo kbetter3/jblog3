@@ -61,7 +61,7 @@ public class UserController {
 	// 로그인
 	@PostMapping("/login")
 	public String login(UserVo userVo, Errors errors, HttpSession session) {
-		// TODO: 로그인 validation
+		// 로그인 validation
 		userVo.loginValidCheck(errors);
 		
 		if (errors.hasErrors()) {

@@ -36,6 +36,13 @@
 		<property name="suffix" value=".jsp"></property>
 		<property name="order" value="1"></property>
 	</bean>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="kr.co.itcen.jblog.security.MyAuthenticationInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 	<mvc:annotation-driven>
 		<mvc:message-converters>
