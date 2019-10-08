@@ -1,10 +1,22 @@
 package kr.co.itcen.jblog.vo;
 
+import org.springframework.validation.Errors;
+
+import kr.co.itcen.jblog.type.ResponseCode;
+
 public class BlogVo {
 	private String id;
 	private String title;
 	private String logo;
 	
+	// 블로그 수정 유효성 검사
+	public void updateValidCheck(Errors errors) {		
+		if (title == null || "".equals(title.trim())) {
+			errors.rejectValue("title", ResponseCode.BLOG_TITLE_NULL.getMessageCode(), ResponseCode.BLOG_TITLE_NULL.getMessage());
+		} else if (title.length() > 100) {
+			errors.rejectValue("title", ResponseCode.BLOG_TITLE_TOO_LONG.getMessageCode(), ResponseCode.BLOG_TITLE_TOO_LONG.getMessage());
+		}
+	}
 	
 	// getter & setter
 	public String getId() {

@@ -6,11 +6,28 @@
 <mapper namespace="blog">
 
 	<insert id="insert" parameterType="blogVo">
-		insert	into blog(id, title)
+		insert	into blog(id, title, logo)
 		values	(
 			#{id}
 			, #{title}
+			, #{logo}
 		);
 	</insert>
 
+	<update id="update" parameterType="blogVo">
+		update	blog
+		   set	title=#{title}
+			<if test="logo != null and logo != ''">
+				, logo=#{logo}
+			</if>
+		 where	id=#{id}
+		;
+	</update>
+
+	<select id="selectBlogById" parameterType="blogVo" resultType="blogVo">
+		select	id, title, logo
+		  from	blog
+		 where	id=#{id}
+		;
+	</select>
 </mapper>

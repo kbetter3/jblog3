@@ -17,7 +17,7 @@ public class UserVo {
 		loginValidCheck(errors);
 
 		// name null check
-		if (name == null || "".equals(name)) {
+		if (name == null || "".equals(name.trim())) {
 			errors.rejectValue("name", ResponseCode.VALID_NULL.getMessageCode(), ResponseCode.VALID_NULL.getMessage());
 		}
 		// name 영문,한글, 글자수 check
@@ -31,7 +31,7 @@ public class UserVo {
 	// login validation
 	public void loginValidCheck(Errors errors) {
 		// 아이디 null check
-		if (id == null || "".equals(id)) {
+		if (id == null || "".equals(id.trim())) {
 			errors.rejectValue("id", ResponseCode.VALID_NULL.getMessageCode(), ResponseCode.VALID_NULL.getMessage());
 		}
 

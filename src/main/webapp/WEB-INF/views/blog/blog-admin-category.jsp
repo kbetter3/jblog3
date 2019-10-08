@@ -8,27 +8,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JBlog</title>
 <Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.9.0.js"></script>
 </head>
 <body>
 	<div id="container">
-<!-- 		<div id="header"> -->
-<!-- 			<h1>Spring 이야기</h1> -->
-<!-- 			<ul> -->
-<!-- 				<li><a href="">로그인</a></li> -->
-<!-- 				<li><a href="">로그아웃</a></li> -->
-<!-- 				<li><a href="">블로그 관리</a></li> -->
-<!-- 			</ul> -->
-<!-- 		</div> -->
 		<c:import url="/WEB-INF/views/includes/admin-header.jsp"/>
 		<div id="wrapper">
 			<div id="content" class="full-screen">
-<!-- 				<ul class="admin-menu"> -->
-<!-- 					<li><a href="">기본설정</a></li> -->
-<!-- 					<li class="selected">카테고리</li> -->
-<!-- 					<li><a href="">글작성</a></li> -->
-<!-- 				</ul> -->
 				<c:import url="/WEB-INF/views/includes/admin-menu.jsp" />
-		      	<table class="admin-cat">
+		      	<table class="admin-cat" id="category-table">
 		      		<tr>
 		      			<th>번호</th>
 		      			<th>카테고리명</th>
@@ -63,24 +51,36 @@
 		      	<table id="admin-cat-add">
 		      		<tr>
 		      			<td class="t">카테고리명</td>
-		      			<td><input type="text" name="name"></td>
+		      			<td><input type="text" name="name" id="category-title"></td>
 		      		</tr>
 		      		<tr>
 		      			<td class="t">설명</td>
-		      			<td><input type="text" name="desc"></td>
+		      			<td><input type="text" name="description" id="category-description"></td>
 		      		</tr>
 		      		<tr>
 		      			<td class="s">&nbsp;</td>
-		      			<td><input type="submit" value="카테고리 추가"></td>
+		      			<td><input type="button" value="카테고리 추가" id="category-add-btn"></td>
 		      		</tr>      		      		
 		      	</table> 
 			</div>
 		</div>
-		<div id="footer">
-			<p>
-				<strong>Spring 이야기</strong> is powered by JBlog (c)2016
-			</p>
-		</div>
+		<c:import url="/WEB-INF/views/includes/admin-footer.jsp" />
 	</div>
+	
+	<script>
+		$(function() {
+			$('#category-add-btn').on('click', addCategory)
+			
+		})
+		
+		function addCategory() {
+			let category = {
+				title: $('#category-title'),
+				description: $('#category-description')
+			}
+
+			console.log(category)
+		}
+	</script>
 </body>
 </html>

@@ -20,20 +20,19 @@
 				<c:import url="/WEB-INF/views/includes/admin-menu.jsp" />
 				
 				<form:form modelAttribute="blogVo" action="${pageContext.request.contextPath}/${sessionScope.authUser.id }/admin" method="post">
-<%-- 				<form action="" method="post"> --%>
 					<form:hidden path="logo" id="logo"/>
 	 		      	<table class="admin-config">
 			      		<tr>
 			      			<td class="t">블로그 제목</td>
 			      			<td>
-<!-- 			      				<input type="text" size="40" name="title"> -->
 			      				<form:input path="title" size="40"/>
+			      				<form:errors path="title" cssStyle="display:block; color:red;" />
 			      			</td>
 			      		</tr>
 			      		<tr>
 			      			<td class="t">로고이미지</td>
 			      			<td>
-			      				<img id="logo-img" src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg">
+			      				<img id="logo-img" src="${blogVo.logo }">
 			      			</td>      			
 			      		</tr>      		
 			      		<tr>
@@ -45,15 +44,10 @@
 			      			<td class="s"><input type="submit" value="기본설정 변경"></td>      			
 			      		</tr>           		
 			      	</table>
-<%-- 				</form> --%>
 				</form:form>
 			</div>
 		</div>
-		<div id="footer">
-			<p>
-				<strong>Spring 이야기</strong> is powered by JBlog (c)2016
-			</p>
-		</div>
+		<c:import url="/WEB-INF/views/includes/admin-footer.jsp" />
 	</div>
 	<script>
 		$(function() {
@@ -61,6 +55,7 @@
 				let file = $('#file')[0].files[0]
 				
 				if (file != null) {
+					// file 확장자 검사 해야함
 					let reader = new FileReader()
 					reader.readAsDataURL(file)
 					reader.onload = function(e) {

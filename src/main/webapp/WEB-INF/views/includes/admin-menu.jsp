@@ -13,7 +13,7 @@
 			<li class="selected">기본설정</li>
 		</c:when>
 		<c:otherwise>
-			<li class="selected"><a href="">기본설정</a></li>
+			<li><a href="${pageContext.request.contextPath}/${sessionScope.authUser.id}">기본설정</a></li>
 		</c:otherwise>
 	</c:choose>
 
@@ -22,7 +22,7 @@
 			<li class="selected">카테고리</li>
 		</c:when>
 		<c:otherwise>
-			<li class="selected"><a href="">카테고리</a></li>
+			<li><a href="${pageContext.request.contextPath}/${sessionScope.authUser.id}/admin/category">카테고리</a></li>
 		</c:otherwise>
 	</c:choose>
 
@@ -31,7 +31,7 @@
 			<li class="selected">글작성</li>
 		</c:when>
 		<c:otherwise>
-			<li class="selected"><a href="">글작성</a></li>
+			<li><a href="${pageContext.request.contextPath}/${sessionScope.authUser.id}/admin/write">글작성</a></li>
 		</c:otherwise>
 	</c:choose>
 </ul>

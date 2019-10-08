@@ -15,6 +15,13 @@ public enum ResponseCode {
 	, DUPLICATED_USER(10001, "response.code.duplicated_user", "duplicated user")	// 중복된 유저
 	, USER_NOT_FOUND(10002, "response.code.user_not_found", "user not found")		// 유저를 찾을 수 없음
 	, LOGIN_ERROR(10003, "response.code.login_error", "check your id or password")	// 로그인 실패
+	
+	// blog 관련 에러 20000
+	, BLOG_NOT_FOUND(20000, "response.code.blog_not_found", "blog not found")					// 블로그를 찾을 수 없음
+	, BLOG_ID_NULL(20001, "response.code.blog_id_null", "blog id can not be null")				// 블로그 ID가 null인 경우
+	, BLOG_ID_TOO_LONG(20002, "response.code.blog_id_too_long", "blog id too long") 			// 블로그 ID의 글자수 초과
+	, BLOG_TITLE_NULL(20003, "response.code.blog_title_null", "blog title can not be null")		// 블로그 TITLE이 null인 경우
+	, BLOG_TITLE_TOO_LONG(20004, "response.code.blog_title_too_long", "blog title too long")	// 블로그 TITLE의 글자수 초과
 	;
 	
 	private int code;

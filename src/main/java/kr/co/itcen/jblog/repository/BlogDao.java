@@ -15,4 +15,12 @@ public class BlogDao {
 	public int insertBlog(BlogVo blogVo) {
 		return session.insert("blog.insert", blogVo);
 	}
+	
+	public int updateBlog(BlogVo blogVo) {
+		return session.update("blog.update", blogVo);
+	}
+	
+	public BlogVo selectBlogById(BlogVo blogVo) {
+		return session.selectOne("blog.selectBlogById", blogVo);
+	}
 }
