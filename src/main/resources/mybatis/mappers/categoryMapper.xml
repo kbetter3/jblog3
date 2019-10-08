@@ -5,6 +5,11 @@
   
 <mapper namespace="category">		
 	<insert id="insert" parameterType="categoryVo">
-		
+		insert	into category (title, description, blog_id)
+		values	(
+			#{title}
+			, #{description}
+			, #{blogId}
+		);
 	</insert>
 </mapper>

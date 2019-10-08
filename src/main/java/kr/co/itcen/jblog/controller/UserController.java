@@ -43,7 +43,7 @@ public class UserController {
 		}
 		
 		// insert
-		ApiResult<Object> apiResult = userService.join(userVo);
+		ApiResult<UserVo> apiResult = userService.join(userVo);
 		
 		// TODO: insert 실패시 -> 삭제 고려해야함
 		if (!apiResult.isStatus()) {

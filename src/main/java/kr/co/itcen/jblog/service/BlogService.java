@@ -15,7 +15,7 @@ public class BlogService {
 	@Autowired
 	private BlogDao blogDao;
 	
-	public ApiResult<Object> createBlog(UserVo userVo) {
+	public ApiResult<BlogVo> createBlog(UserVo userVo) {
 		BlogVo blogVo = new BlogVo();
 		blogVo.setId(userVo.getId());
 		blogVo.setTitle(userVo.getId() + "님의 블로그");

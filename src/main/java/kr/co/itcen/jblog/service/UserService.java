@@ -8,6 +8,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import kr.co.itcen.jblog.repository.UserDao;
 import kr.co.itcen.jblog.result.ApiResult;
 import kr.co.itcen.jblog.type.ResponseCode;
+import kr.co.itcen.jblog.vo.BlogVo;
 import kr.co.itcen.jblog.vo.UserVo;
 
 @Service
@@ -17,15 +18,21 @@ public class UserService {
 	private BlogService blogService;
 	
 	@Autowired
+	private CategoryService categoryService;
+	
+	@Autowired
 	private UserDao userDao;
 	
 	/**
 	 * 유저 회원가입 및 블로그 생성
 	 */
 	@Transactional(rollbackFor = Exception.class)
-	public ApiResult<Object> join(UserVo userVo) {
-		// 유저 가입시 blog도 생성
-		if (userDao.insertUser(userVo) == 1 && blogService.createBlog(userVo).isStatus()) {
+	public ApiResult<UserVo> join(UserVo userVo) {
+		// 유저 가입시 blog, category 생성
+		// 1. USER insert
+		// 2. blogInsert 및 blog id 가져오기
+		// 3. 가져온 blogId를 이용하여 category생성
+		if ((userDao.insertUser(userVo) == 1) && blogService.createBlog(userVo).isStatus() && categoryService.createCategory(userVo).isStatus()) {
 			return new ApiResult<>();
 		} else {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -37,7 +44,7 @@ public class UserService {
 	/**
 	 * 아이디 중복체크
 	 */
-	public ApiResult<Object> idDuplicationCheck(UserVo userVo) {
+	public ApiResult<UserVo> idDuplicationCheck(UserVo userVo) {
 		if (userDao.idDuplicationCheck(userVo) == 0) {
 			return new ApiResult<>();
 		} else {

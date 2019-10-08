@@ -18,8 +18,7 @@ public class UserApiController {
 	
 	
 	@PostMapping("/idcheck")
-	public ApiResult<Object> idDuplicationCheck(UserVo userVo) {
-//		return userService.idDuplicationCheck(userId);
+	public ApiResult<UserVo> idDuplicationCheck(UserVo userVo) {
 		return userService.idDuplicationCheck(userVo);
 	}
 }
