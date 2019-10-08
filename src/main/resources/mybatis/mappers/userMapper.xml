@@ -10,7 +10,7 @@
 		values (
 			#{id}
 			, #{name}
-			, #{passwd}
+			, password(#{passwd})
 		);
 	</insert>
 	
@@ -18,6 +18,14 @@
 		select	count(*) as 'cnt'
 		  from	user
 		 where	id=#{id}
+		;
+	</select>
+
+	<select id="selectOneByUserIdAndPasswd" parameterType="userVo" resultType="userVo">
+		select	id, name, passwd, reg_date
+		  from	user
+		 where	id=#{id}
+		   and	passwd=password(#{passwd})
 		;
 	</select>
 	

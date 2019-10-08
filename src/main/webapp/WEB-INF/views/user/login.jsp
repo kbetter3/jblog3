@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!doctype html>
 <html>
@@ -13,18 +14,16 @@
 <body>
 	<div class="center-content">
 		<h1 class="logo">JBlog</h1>
-<!-- 		<ul class="menu"> -->
-<!-- 			<li><a href="">로그인</a></li> -->
-<!-- 			<li><a href="">회원가입</a></li> -->
-<!-- 			<li><a href="">로그아웃</a></li> -->
-<!-- 			<li><a href="">내블로그</a></li> -->
-<!-- 		</ul> -->
 		<c:import url="/WEB-INF/views/includes/umenu.jsp" />
-		<form class="login-form">
-      		<label>아이디</label> <input type="text" name="id">
-      		<label>패스워드</label> <input type="text" name="password">
+		<form:form method="post" action="${pageContext.request.contextPath}/user/login" cssClass="login-form" modelAttribute="userVo">
+      		<label>아이디</label>
+      		<form:input path="id"/>
+      		<form:errors path="id" cssStyle="color:red; display:block;" />
+      		<label>패스워드</label>
+      		<input type="text" name="passwd">
+      		<form:errors path="passwd" cssStyle="color:red; display:block;" />
       		<input type="submit" value="로그인">
-		</form>
+		</form:form>
 	</div>
 </body>
 </html>

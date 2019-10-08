@@ -19,8 +19,12 @@ public class UserService {
 	@Autowired
 	private UserDao userDao;
 	
+	/**
+	 * 유저 회원가입 및 블로그 생성
+	 */
 	@Transactional(rollbackFor = Exception.class)
-	public ApiResult<Object> joinUser(UserVo userVo) {
+	public ApiResult<Object> join(UserVo userVo) {
+		// 유저 가입시 blog도 생성
 		if (userDao.insertUser(userVo) == 1 && blogService.createBlog(userVo).isStatus()) {
 			return new ApiResult<>();
 		} else {
@@ -29,15 +33,26 @@ public class UserService {
 		}
 	}
 	
+	
+	/**
+	 * 아이디 중복체크
+	 */
 	public ApiResult<Object> idDuplicationCheck(UserVo userVo) {
-//	public ApiResult<Object> idDuplicationCheck(String userId) {
-//		UserVo userVo = new UserVo();
-//		userVo.setId(userId);
-		
 		if (userDao.idDuplicationCheck(userVo) == 0) {
 			return new ApiResult<>();
 		} else {
 			return new ApiResult<>(ResponseCode.DUPLICATED_USER);
+		}
+	}
+	
+	
+	public ApiResult<UserVo> login(UserVo userVo) {
+		UserVo authUser = userDao.selectUserByIdAndPasswd(userVo);
+		
+		if (authUser != null) {
+			return new ApiResult<>(authUser);
+		} else {
+			return new ApiResult<>(ResponseCode.LOGIN_ERROR);
 		}
 	}
 }

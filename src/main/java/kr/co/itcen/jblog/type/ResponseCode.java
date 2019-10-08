@@ -13,6 +13,8 @@ public enum ResponseCode {
 	
 	// user 관련 에러 10000
 	, DUPLICATED_USER(10001, "response.code.duplicated_user", "duplicated user")	// 중복된 유저
+	, USER_NOT_FOUND(10002, "response.code.user_not_found", "user not found")		// 유저를 찾을 수 없음
+	, LOGIN_ERROR(10003, "response.code.login_error", "check your id or password")	// 로그인 실패
 	;
 	
 	private int code;

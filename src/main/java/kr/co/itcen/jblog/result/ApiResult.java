@@ -7,17 +7,18 @@ import kr.co.itcen.jblog.type.ResponseCode;
 public class ApiResult<T> {
 	private int code;
 	private boolean status;
+	private String messageCode;
 	private String message;
 
 	private T data;
 	private List<T> datas;
 
 	public ApiResult() {
-		this(ResponseCode.SUCCESS.getCode(), true, ResponseCode.SUCCESS.getMessage());
+		this(ResponseCode.SUCCESS.getCode(), true, ResponseCode.SUCCESS.getMessageCode(), ResponseCode.SUCCESS.getMessage());
 	}
 
 	public ApiResult(ResponseCode responseCode) {
-		this(responseCode.getCode(), false, responseCode.getMessage());
+		this(responseCode.getCode(), false, responseCode.getMessageCode(), responseCode.getMessage());
 	}
 
 	public ApiResult(T data) {
@@ -30,9 +31,10 @@ public class ApiResult<T> {
 		this.datas = datas;
 	}
 
-	public ApiResult(int code, boolean status, String message) {
+	public ApiResult(int code, boolean status, String messageCode, String message) {
 		this.code = code;
 		this.status = status;
+		this.messageCode = messageCode;
 		this.message = message;
 	}
 
@@ -76,5 +78,13 @@ public class ApiResult<T> {
 
 	public void setDatas(List<T> datas) {
 		this.datas = datas;
+	}
+
+	public String getMessageCode() {
+		return messageCode;
+	}
+
+	public void setMessageCode(String messageCode) {
+		this.messageCode = messageCode;
 	}
 }

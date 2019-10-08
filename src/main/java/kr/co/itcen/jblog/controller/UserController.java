@@ -1,5 +1,7 @@
 package kr.co.itcen.jblog.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class UserController {
 		return "user/join";
 	}
 	
-	// TODO: 회원가입
+	// 회원가입
 	@PostMapping("/join")
 	public String join(UserVo userVo, Errors errors) {
 		// validation check
@@ -40,25 +42,51 @@ public class UserController {
 			return "user/join";
 		}
 		
-		// TODO: insert
-		// user insert시 category도 같이 insert해야함
-		ApiResult apiResult = userService.joinUser(userVo);
+		// insert
+		ApiResult<Object> apiResult = userService.join(userVo);
 		
 		// TODO: insert 실패시 -> 삭제 고려해야함
 		if (!apiResult.isStatus()) {
 			return "user/join";
 		}
 		
-		return "redirect:/user/login";
+		return "user/joinsuccess";
 	}
 	
 	@GetMapping("/login")
-	public String loginView() {
+	public String loginView(@ModelAttribute UserVo userVo) {
 		return "user/login";
 	}
 	
+	// 로그인
 	@PostMapping("/login")
-	public String login() {
-		return null;
+	public String login(UserVo userVo, Errors errors, HttpSession session) {
+		// TODO: 로그인 validation
+		userVo.loginValidCheck(errors);
+		
+		if (errors.hasErrors()) {
+			return "user/login";
+		}
+		
+		ApiResult<UserVo> apiResult = userService.login(userVo);
+		
+		if (!apiResult.isStatus()) {
+			errors.rejectValue("id", apiResult.getMessageCode(), apiResult.getMessage());
+			return "user/login";
+		}
+		// session에 authUser 추가
+		session.setAttribute("authUser", apiResult.getData());
+		// TODO: spring security 사용 검토
+	
+		// TODO: 로그인한 사용자 블로그로 이동할 수 있도록 처리해야함
+		return "redirect:/" + apiResult.getData().getId();
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("authUser");
+		session.invalidate();
+		
+		return "redirect:/";
 	}
 }
