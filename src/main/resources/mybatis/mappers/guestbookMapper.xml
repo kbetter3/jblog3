@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="guestbook">
+
+	<insert id="insert" parameterType="guestbookVo">
+		insert	into guestbook(contents, writer, passwd) 
+		values	( #{contents}
+				, #{writer}
+				, #{passwd}
+		);
+	</insert>
+	
+	<select id="getList" resultType="guestbookVo">
+		select	no
+				, @rownum:=@rownum+1 as 'rno'
+		        , ifnull(contents, '') as 'contents'
+		        , writer
+		        , reg_date
+		  from	(
+				select	no
+						, contents
+		                , writer
+		                , reg_date 
+				  from	guestbook 
+				 order	by reg_date desc) as gb
+				, (select @rownum:=0) as rnum
+		 order	by rno desc
+		;
+	</select>
+	
+	<delete id="delete" parameterType="guestbookVo">
+		delete	from guestbook 
+		 where	no=#{no} 
+		   and	passwd=#{passwd}
+		;
+	</delete>
+
+</mapper>

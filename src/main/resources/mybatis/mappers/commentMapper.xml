@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="comment">
+	<insert id="insert" parameterType="commentVo">
+		insert	into comment (
+			contents
+		    , user_no
+		    , board_no
+		) values (
+			#{contents}
+		    , #{userNo}
+		    , #{boardNo}
+		);
+	</insert>
+	
+	<select id="getList" parameterType="commentVo" resultType="commentVo">
+		select	c.no as 'no'
+				, if(c.use_yn=true, c.contents, '삭제된 댓글 입니다.') as 'contents'
+		        , c.reg_date as 'reg_date'
+		        , c.board_no as 'board_no'
+		        , c.use_yn as 'use_yn'
+		        , c.user_no as 'user_no'
+		        , u.name as 'user_name'
+		  from	comment as c
+				, user as u
+		 where	c.user_no = u.no
+		   and	c.board_no = #{boardNo}
+		 order	by c.reg_date asc
+		;
+	</select>
+	
+	<update id="delete" parameterType="commentVo">
+		update	comment 
+		   set	use_yn=false 
+		 where	no=#{no} 
+		   and	board_no=#{boardNo} 
+		   and	user_no=#{userNo}
+		;
+	</update>
+</mapper>

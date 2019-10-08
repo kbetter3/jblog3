@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="user">
+
+	<insert id="insert" parameterType="userVo">
+		insert into user(name, email, passwd, gender) 
+		values (
+			#{name}
+			, #{email}
+			, #{passwd}
+			, #{gender}
+		);
+	</insert>
+	
+	<select id="getByNo" parameterType="userVo" resultType="userVo">
+		select	no, name, email, passwd, gender, role
+		  from	user 
+		 where	no=#{no}
+		;
+	</select>
+	
+	<select id="get" parameterType="userVo" resultType="userVo">
+		select	no, name, role 
+		  from	user 
+		 where	email=#{email} 
+		   and	passwd=#{passwd}
+		;
+	</select>
+	
+	<update id="update" parameterType="userVo">
+		update	user 
+		   set	name=#{name}
+		   		<if test="passwd neq null and passwd neq ''">
+		   			, passwd=#{passwd}
+		   		</if>
+		   		, gender=#{gender}
+		 where	no=#{no}
+		;
+	</update>
+	
+	<select id="getByEmail" parameterType="userVo" resultType="int">
+		select	count(*) as 'cnt'
+		  from	user
+		 where	email=#{email}
+		;
+	</select>
+	
+</mapper>
