@@ -5,7 +5,7 @@ import java.util.List;
 import kr.co.itcen.jblog.type.ResponseCode;
 
 public class ApiResult<T> {
-	private int code;
+	private String code;
 	private boolean status;
 	private String messageCode;
 	private String message;
@@ -31,7 +31,7 @@ public class ApiResult<T> {
 		this.datas = datas;
 	}
 
-	public ApiResult(int code, boolean status, String messageCode, String message) {
+	public ApiResult(String code, boolean status, String messageCode, String message) {
 		this.code = code;
 		this.status = status;
 		this.messageCode = messageCode;
@@ -40,11 +40,11 @@ public class ApiResult<T> {
 
 	
 	// getter, setter
-	public int getCode() {
+	public String getCode() {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 

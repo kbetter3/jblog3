@@ -11,8 +11,14 @@ public class CategoryDao {
 
 	@Autowired
 	private SqlSession session;
-	
+
+	// category 생성
 	public int insertCategory(CategoryVo categoryVo) {
 		return session.insert("category.insert", categoryVo);
+	}
+	
+	// category 삭제
+	public int deleteCategory(CategoryVo categoryVo) {
+		return session.update("category.delete", categoryVo);
 	}
 }

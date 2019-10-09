@@ -12,4 +12,12 @@
 			, #{blogId}
 		);
 	</insert>
+	
+	<update id="delete" parameterType="categoryVo">
+		update	category
+		   set	use_yn = false
+		 where	no=?
+		   and	blog_id=??
+		;
+	</update>
 </mapper>

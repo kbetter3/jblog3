@@ -38,4 +38,15 @@ public class CategoryService {
 			return new ApiResult<>(ResponseCode.DB_ERROR);
 		}
 	}
+	
+	/**
+	 * 카테고리 삭제
+	 */
+	public ApiResult<CategoryVo> deleteCategory(CategoryVo categoryVo) {
+		if (categoryDao.deleteCategory(categoryVo) == 1) {
+			return new ApiResult<>();	
+		} else {
+			return new ApiResult<>(ResponseCode.DB_ERROR);
+		}
+	}
 }

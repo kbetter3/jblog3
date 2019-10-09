@@ -75,11 +75,23 @@
 		
 		function addCategory() {
 			let category = {
-				title: $('#category-title'),
-				description: $('#category-description')
+				title: $('#category-title').val(),
+				description: $('#category-description').val()
 			}
 
 			console.log(category)
+
+			$.ajax({
+				url: '${pageContext.request.contextPath}/api/${sessionScope.authUser.id}/admin/category',
+				method: 'post',
+				data: category,
+				success: function(response) {
+					console.log('response: ', response)
+				},
+				error: function(error) {
+					console.log('error')
+				}
+			})
 		}
 	</script>
 </body>

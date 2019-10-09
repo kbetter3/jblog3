@@ -18,13 +18,12 @@ public class UserVo {
 
 		// name null check
 		if (name == null || "".equals(name.trim())) {
-			errors.rejectValue("name", ResponseCode.VALID_NULL.getMessageCode(), ResponseCode.VALID_NULL.getMessage());
+			errors.rejectValue("name", ResponseCode.VALID_NULL.getCode(), ResponseCode.VALID_NULL.getMessage());
 		}
 		// name 영문,한글, 글자수 check
 		String nameRegex = "^[a-zA-Z가-힣]{2,20}$";
 		if (!name.matches(nameRegex)) {
-			errors.rejectValue("name", ResponseCode.VALID_ERROR.getMessageCode(),
-					ResponseCode.VALID_ERROR.getMessage());
+			errors.rejectValue("name", ResponseCode.VALID_ERROR.getCode(), ResponseCode.VALID_ERROR.getMessage());
 		}
 	}
 
@@ -32,19 +31,18 @@ public class UserVo {
 	public void loginValidCheck(Errors errors) {
 		// 아이디 null check
 		if (id == null || "".equals(id.trim())) {
-			errors.rejectValue("id", ResponseCode.VALID_NULL.getMessageCode(), ResponseCode.VALID_NULL.getMessage());
+			errors.rejectValue("id", ResponseCode.VALID_NULL.getCode(), ResponseCode.VALID_NULL.getMessage());
 		}
 
 		// id 영숫자, 글자수 check
 		String idRegex = "^[a-zA-Z0-9]{4,20}$";
 		if (!id.matches(idRegex)) {
-			errors.rejectValue("id", ResponseCode.VALID_ERROR.getMessageCode(), ResponseCode.VALID_ERROR.getMessage());
+			errors.rejectValue("id", ResponseCode.VALID_ERROR.getCode(), ResponseCode.VALID_ERROR.getMessage());
 		}
 
 		// pw null check
 		if (passwd == null || "".equals(passwd)) {
-			errors.rejectValue("passwd", ResponseCode.VALID_NULL.getMessageCode(),
-					ResponseCode.VALID_NULL.getMessage());
+			errors.rejectValue("passwd", ResponseCode.VALID_NULL.getCode(), ResponseCode.VALID_NULL.getMessage());
 		}
 	}
 

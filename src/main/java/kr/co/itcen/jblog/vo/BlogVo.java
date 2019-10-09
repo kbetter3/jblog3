@@ -12,9 +12,9 @@ public class BlogVo {
 	// 블로그 수정 유효성 검사
 	public void updateValidCheck(Errors errors) {		
 		if (title == null || "".equals(title.trim())) {
-			errors.rejectValue("title", ResponseCode.BLOG_TITLE_NULL.getMessageCode(), ResponseCode.BLOG_TITLE_NULL.getMessage());
+			errors.rejectValue("title", ResponseCode.BLOG_TITLE_NULL.getCode(), ResponseCode.BLOG_TITLE_NULL.getMessage());
 		} else if (title.length() > 100) {
-			errors.rejectValue("title", ResponseCode.BLOG_TITLE_TOO_LONG.getMessageCode(), ResponseCode.BLOG_TITLE_TOO_LONG.getMessage());
+			errors.rejectValue("title", ResponseCode.BLOG_TITLE_TOO_LONG.getCode(), ResponseCode.BLOG_TITLE_TOO_LONG.getMessage());
 		}
 	}
 	
