@@ -2,8 +2,6 @@ package kr.co.itcen.jblog.controller;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.co.itcen.jblog.result.ApiResult;
 import kr.co.itcen.jblog.security.MyAuth;
 import kr.co.itcen.jblog.service.BlogService;
+import kr.co.itcen.jblog.service.CategoryService;
 import kr.co.itcen.jblog.vo.BlogVo;
+import kr.co.itcen.jblog.vo.CategoryVo;
 import kr.co.itcen.jblog.vo.UserVo;
 
 @MyAuth
@@ -26,6 +26,9 @@ public class AdminController {
 	
 	@Autowired
 	private BlogService blogService;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	@GetMapping({"", "/basic"})
 	public String basicView(@PathVariable String userId, HttpSession session, Model model) {
@@ -47,7 +50,7 @@ public class AdminController {
 	
 	@PostMapping({"", "/basic"})
 	public String basic(@PathVariable String userId, BlogVo blogVo, Errors errors, HttpSession session) {
-		// TODO: 본인여부 검사
+		// 본인여부 검사
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		
 		if (authUser.getId().equals(userId) == false) {
@@ -65,6 +68,12 @@ public class AdminController {
 		
 		ApiResult<BlogVo> apiResult = blogService.updateBlog(blogVo);
 		
+		// apiResult의 status에 따라 return 분기 처리
+		if (!apiResult.isStatus()) {
+			errors.rejectValue("title", apiResult.getCode(), apiResult.getMessage());
+			return "blog/blog-admin-basic";
+		}
+		
 		return "redirect:/" + blogVo.getId() + "/admin";
 	}
 	
@@ -74,7 +83,21 @@ public class AdminController {
 	}
 	
 	@GetMapping("/category")
-	public String categoryView() {
+	public String categoryView(@PathVariable String userId, HttpSession session, Model model) {
+		// 본인확인
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		
+		if (authUser.getId().equals(userId) == false) {
+			return "redirect:/" + userId;
+		}
+		
+		// category 조회 및 model 추가
+		CategoryVo categoryVo = new CategoryVo();
+		categoryVo.setBlogId(authUser.getId());
+		
+		ApiResult<CategoryVo> apiResult = categoryService.selectCategoryByBlogId(categoryVo);
+		model.addAttribute("categoryList", apiResult.getDatas());
+		
 		return "blog/blog-admin-category";
 	}
 }
