@@ -37,7 +37,7 @@ public class AdminController {
 	private PostService postService;
 	
 	@GetMapping({"", "/basic"})
-	public String basicView(@PathVariable String userId, HttpSession session, Model model) {
+	public String basicView(@ModelAttribute @PathVariable String userId, HttpSession session, Model model) {
 		// 본인여부 검사 
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		
@@ -55,7 +55,7 @@ public class AdminController {
 	}
 	
 	@PostMapping({"", "/basic"})
-	public String basic(@PathVariable String userId, BlogVo blogVo, Errors errors, HttpSession session) {
+	public String basic(@ModelAttribute @PathVariable String userId, BlogVo blogVo, Errors errors, HttpSession session) {
 		// 본인여부 검사
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		
@@ -85,7 +85,7 @@ public class AdminController {
 	
 	// 게시글 등록 페이지
 	@GetMapping("/write")
-	public String writeView(@PathVariable String userId, @ModelAttribute PostVo postVo, HttpSession session, Model model) {
+	public String writeView(@ModelAttribute @PathVariable String userId, @ModelAttribute PostVo postVo, HttpSession session, Model model) {
 		// 본인확인
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		
@@ -109,7 +109,7 @@ public class AdminController {
 	
 	// 게시글 등록
 	@PostMapping("/write")
-	public String write(@PathVariable String userId, PostVo postVo, Errors errors, HttpSession session, Model model) {
+	public String write(@ModelAttribute @PathVariable String userId, PostVo postVo, Errors errors, HttpSession session, Model model) {
 		// 본인확인
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		
@@ -157,7 +157,7 @@ public class AdminController {
 	
 	// 카테고리 관리 페이지
 	@GetMapping("/category")
-	public String categoryView(@PathVariable String userId, HttpSession session, Model model) {
+	public String categoryView(@ModelAttribute @PathVariable String userId, HttpSession session, Model model) {
 		// 본인확인
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		

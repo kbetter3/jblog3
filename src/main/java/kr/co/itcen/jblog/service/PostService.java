@@ -24,5 +24,20 @@ public class PostService {
 			return new ApiResult<>(ResponseCode.DB_ERROR);
 		}
 	}
+
 	
+	/**
+	 * 게시글 리스트 조회
+	 */
+	public ApiResult<PostVo> selectListByCategoryNo(PostVo postVo) {
+		return new ApiResult<>(postDao.selectListByCategoryNo(postVo));
+	}
+	
+	/**
+	 * 게시글 단일 조회
+	 * 게시글 미존재시 data = null
+	 */
+	public ApiResult<PostVo> selectByNoAndCategoryNo(PostVo postVo) {
+		return new ApiResult<>(postDao.selectByNoAndCategoryNo(postVo));
+	}
 }

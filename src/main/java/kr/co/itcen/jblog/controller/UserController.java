@@ -77,10 +77,9 @@ public class UserController {
 		}
 		// session에 authUser 추가
 		session.setAttribute("authUser", apiResult.getData());
-		// TODO: spring security 사용 검토
 	
 		// 로그인한 사용자 블로그로 이동
-		return "redirect:/" + apiResult.getData().getId();
+		return "redirect:/";
 	}
 	
 	// logout

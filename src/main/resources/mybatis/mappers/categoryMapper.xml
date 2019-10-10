@@ -29,7 +29,7 @@
 		  from	category
 		 where	blog_id=#{blogId}
 		   and	use_yn=true
-		 order	by reg_date asc
+		 order	by no asc
 		;
 	</select>
 	
@@ -38,7 +38,6 @@
 		  from	category
 		 where	blog_id=#{blogId}
 		   and	use_yn=true
-		 order	by reg_date asc
 		;	
 	</select>
 	
@@ -58,6 +57,7 @@
 		 where	c.use_yn=true
 		   and	c.blog_id=#{blogId}
 		 group	by c.blog_id, c.no, c.title, c.description, p.category_no
+		 order	by c.no asc
 		;
 	</select>
 </mapper>

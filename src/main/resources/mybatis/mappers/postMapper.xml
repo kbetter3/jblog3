@@ -15,4 +15,21 @@
 			select	last_insert_id();
 		</selectKey>
 	</insert>
+	
+	<select id="selectListByCategoryNo" parameterType="postVo" resultType="postVo">
+		select	no, title, reg_date, category_no
+		  from	post
+		 where	category_no=#{categoryNo}
+		   and	use_yn=true
+		 order	by reg_date desc
+		;
+	</select>
+	
+	<select id="selectByNoAndCategoryNo" parameterType="postVo" resultType="postVo">
+		select	title, contents
+		  from	post
+		 where	no=#{no}
+		   and	category_no=#{categoryNo}
+		;
+	</select>
 </mapper>
