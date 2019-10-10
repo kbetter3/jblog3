@@ -82,6 +82,7 @@ public class UserController {
 		return "redirect:/" + apiResult.getData().getId();
 	}
 	
+	// logout
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("authUser");
