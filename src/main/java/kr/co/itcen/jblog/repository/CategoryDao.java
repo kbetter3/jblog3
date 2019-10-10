@@ -38,4 +38,9 @@ public class CategoryDao {
 	public int existCheck(CategoryVo categoryVo) {
 		return session.selectOne("category.existCheck", categoryVo);
 	}
+	
+	// 해당 블로그의 category별 게시글수를 포함한 카테고리 정보 조회
+	public List<CategoryVo> selectWithPostCntByBlogIdAndCategoryNo(CategoryVo categoryVo) {
+		return session.selectList("category.selectWithPostCntByBlogIdAndCategoryNo", categoryVo);
+	}
 }

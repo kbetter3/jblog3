@@ -169,7 +169,7 @@ public class AdminController {
 		CategoryVo categoryVo = new CategoryVo();
 		categoryVo.setBlogId(authUser.getId());
 		
-		ApiResult<CategoryVo> apiResult = categoryService.selectCategoryByBlogId(categoryVo);
+		ApiResult<CategoryVo> apiResult = categoryService.selectWithPostCntByBlogIdAndCategoryNo(categoryVo);
 		model.addAttribute("categoryList", apiResult.getDatas());
 		
 		return "blog/blog-admin-category";

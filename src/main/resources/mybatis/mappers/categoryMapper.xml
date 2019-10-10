@@ -11,13 +11,16 @@
 			, #{description}
 			, #{blogId}
 		);
+		<selectKey keyProperty="no" resultType="int">
+			select	last_insert_id();
+		</selectKey>
 	</insert>
 	
 	<update id="delete" parameterType="categoryVo">
 		update	category
 		   set	use_yn = false
-		 where	no=?
-		   and	blog_id=??
+		 where	no=#{no}
+		   and	blog_id=#{blogId}
 		;
 	</update>
 	
@@ -46,5 +49,15 @@
 		   and	use_yn=true
 		   and	blog_id=#{blogId}
 		;	
+	</select>
+	
+	<select id="selectWithPostCntByBlogIdAndCategoryNo" parameterType="categoryVo" resultType="categoryVo">
+		select	c.no, c.title, c.description, count(p.category_no) as 'post_cnt'
+		  from	category as c
+		  left	join post as p on c.no = p.category_no
+		 where	c.use_yn=true
+		   and	c.blog_id=#{blogId}
+		 group	by c.blog_id, c.no, c.title, c.description, p.category_no
+		;
 	</select>
 </mapper>

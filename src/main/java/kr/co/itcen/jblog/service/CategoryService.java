@@ -37,7 +37,7 @@ public class CategoryService {
 	 */
 	public ApiResult<CategoryVo> createCategory(CategoryVo categoryVo) {
 		if (categoryDao.insertCategory(categoryVo) == 1) {
-			return new ApiResult<>();
+			return new ApiResult<>(categoryVo);
 		} else {
 			return new ApiResult<>(ResponseCode.DB_ERROR);
 		}
@@ -80,5 +80,13 @@ public class CategoryService {
 		} else {
 			return new ApiResult<>(ResponseCode.FORBIDDEN);
 		}
+	}
+	
+	
+	/**
+	 * 카테고리별 게시글 수를 포함한 카테고리 정보 조회 
+	 */
+	public ApiResult<CategoryVo> selectWithPostCntByBlogIdAndCategoryNo(CategoryVo categoryVo) {
+		return new ApiResult<>(categoryDao.selectWithPostCntByBlogIdAndCategoryNo(categoryVo));
 	}
 }
