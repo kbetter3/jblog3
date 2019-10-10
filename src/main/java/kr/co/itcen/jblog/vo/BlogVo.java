@@ -13,7 +13,7 @@ public class BlogVo {
 	public void updateValidCheck(Errors errors) {		
 		if (title == null || "".equals(title.trim())) {
 			errors.rejectValue("title", ResponseCode.BLOG_TITLE_NULL.getCode(), ResponseCode.BLOG_TITLE_NULL.getMessage());
-		} else if (title.length() > 100) {
+		} else if (title.length() > 40) {
 			errors.rejectValue("title", ResponseCode.BLOG_TITLE_TOO_LONG.getCode(), ResponseCode.BLOG_TITLE_TOO_LONG.getMessage());
 		}
 	}

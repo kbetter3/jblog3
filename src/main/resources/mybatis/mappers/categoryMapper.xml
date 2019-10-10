@@ -38,4 +38,13 @@
 		 order	by reg_date asc
 		;	
 	</select>
+	
+	<select id="existCheck" parameterType="categoryVo" resultType="int">
+		select	count(*)
+		  from	category
+		 where	no=#{no}
+		   and	use_yn=true
+		   and	blog_id=#{blogId}
+		;	
+	</select>
 </mapper>

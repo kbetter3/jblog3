@@ -33,4 +33,9 @@ public class CategoryDao {
 	public int selectCntByBlogId(CategoryVo categoryVo) {
 		return session.selectOne("category.selectCntByBlogId", categoryVo);
 	}
+	
+	// category 존재 여부 확인 no, blog_id
+	public int existCheck(CategoryVo categoryVo) {
+		return session.selectOne("category.existCheck", categoryVo);
+	}
 }

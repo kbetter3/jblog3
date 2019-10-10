@@ -37,6 +37,11 @@ public enum ResponseCode {
 	, CATEGORY_TITLE_TOO_LONG("30002", "response.code.category_title_too_long", "category title too long")		// 카테고리 TITLE의 글자수 초과
 	, INVALID_CATEGORY_NO("30003", "response.code.invalid_category_no", "invalid category no")					// 잘못된 카테고리 no
 	, CATEGORY_CAN_NOT_BE_LESS_THAN_ONE("30004", "response.code.category_can_not_be_less_than_one", "category can not be less than one")	// 카테고리가 1개 미만일 경우
+	
+	// post 관련 에러 40000
+	, POST_TITLE_NULL("40001", "response.code.post_title_null", "post title can not be null")		// 포스트 TITLE이 null인 경우
+	, POST_TITLE_TOO_LONG("40002", "response.code.post_title_too_long", "post title too long")		// 포스트 TITLE의 글자수 초과
+	, POST_CONTENTS_NULL("40003", "response.code.post_contents_null", "post contents can not be null") // 포스트 게시글이 null인 경우
 	;
 	
 	private String code;

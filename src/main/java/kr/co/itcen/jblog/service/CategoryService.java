@@ -69,4 +69,16 @@ public class CategoryService {
 		
 		return new ApiResult<>(list);
 	}
+	
+	
+	/**
+	 * 카테고리 접근 가능 여부조회(본인의 블로그의 카테고리)
+	 */
+	public ApiResult<CategoryVo> existCheck(CategoryVo categoryVo) {
+		if (categoryDao.existCheck(categoryVo) == 1) {
+			return new ApiResult<>();
+		} else {
+			return new ApiResult<>(ResponseCode.FORBIDDEN);
+		}
+	}
 }

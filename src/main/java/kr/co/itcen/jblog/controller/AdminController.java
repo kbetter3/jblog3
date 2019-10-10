@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +16,10 @@ import kr.co.itcen.jblog.result.ApiResult;
 import kr.co.itcen.jblog.security.MyAuth;
 import kr.co.itcen.jblog.service.BlogService;
 import kr.co.itcen.jblog.service.CategoryService;
+import kr.co.itcen.jblog.service.PostService;
 import kr.co.itcen.jblog.vo.BlogVo;
 import kr.co.itcen.jblog.vo.CategoryVo;
+import kr.co.itcen.jblog.vo.PostVo;
 import kr.co.itcen.jblog.vo.UserVo;
 
 @MyAuth
@@ -29,6 +32,9 @@ public class AdminController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private PostService postService;
 	
 	@GetMapping({"", "/basic"})
 	public String basicView(@PathVariable String userId, HttpSession session, Model model) {
@@ -77,11 +83,79 @@ public class AdminController {
 		return "redirect:/" + blogVo.getId() + "/admin";
 	}
 	
+	// 게시글 등록 페이지
 	@GetMapping("/write")
-	public String writeView() {
+	public String writeView(@PathVariable String userId, @ModelAttribute PostVo postVo, HttpSession session, Model model) {
+		// 본인확인
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		
+		if (authUser.getId().equals(userId) == false) {
+			return "redirect:/" + userId;
+		}
+		
+		// blogId 세팅
+		CategoryVo categoryVo = new CategoryVo();
+		categoryVo.setBlogId(authUser.getId());
+		
+		// 카테고리 리스트 조회 및 model 설정
+		ApiResult<CategoryVo> categoryResult = categoryService.selectCategoryByBlogId(categoryVo);
+		
+		if (categoryResult.isStatus()) {
+			model.addAttribute("categoryList", categoryResult.getDatas());
+		}
+		
 		return "blog/blog-admin-write";
 	}
 	
+	// 게시글 등록
+	@PostMapping("/write")
+	public String write(@PathVariable String userId, PostVo postVo, Errors errors, HttpSession session, Model model) {
+		// 본인확인
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		
+		if (authUser.getId().equals(userId) == false) {
+			return "redirect:/" + userId;
+		}
+		
+		// 유효성 검사
+		postVo.createValidCheck(errors);
+		
+		CategoryVo categoryVo = new CategoryVo();
+		categoryVo.setBlogId(authUser.getId());
+		ApiResult<CategoryVo> categoryResult = null;
+		
+		if (errors.hasErrors()) {
+			// 카테고리 리스트 조회 및 model 설정
+//			CategoryVo categoryVo = new CategoryVo();
+//			categoryVo.setBlogId(authUser.getId());
+			categoryResult = categoryService.selectCategoryByBlogId(categoryVo);
+			
+			if (categoryResult.isStatus()) {
+				model.addAttribute("categoryList", categoryResult.getDatas());
+			}
+			
+			return "blog/blog-admin-write";
+		}
+		
+		// 지정한 카테고리가 본인의 블로그에 속한 카테고리인지 검사
+		categoryVo.setNo(postVo.getCategoryNo());
+		categoryResult = categoryService.existCheck(categoryVo);
+		
+		if (!categoryResult.isStatus()) {
+			return "redirect:/" + userId;
+		}
+		
+		ApiResult<PostVo> postResult = postService.createPost(postVo);
+		
+		if (postResult.isStatus()) {
+			// 결과에 따라 return 분기, 성공시 redirect blog main, 실패시 errors와 함께 페이지 재 로딩
+			return "redirect:/" + userId + "/" + postVo.getCategoryNo() + "/" + postVo.getNo();
+		} else {
+			return "blog/blog-admin-write";
+		}
+	}
+	
+	// 카테고리 관리 페이지
 	@GetMapping("/category")
 	public String categoryView(@PathVariable String userId, HttpSession session, Model model) {
 		// 본인확인

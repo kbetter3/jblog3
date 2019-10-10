@@ -12,11 +12,13 @@
 		<typeAlias type="kr.co.itcen.jblog.vo.UserVo" alias="userVo"/>
 		<typeAlias type="kr.co.itcen.jblog.vo.BlogVo" alias="blogVo"/>
 		<typeAlias type="kr.co.itcen.jblog.vo.CategoryVo" alias="categoryVo"/>
+		<typeAlias type="kr.co.itcen.jblog.vo.PostVo" alias="postVo"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mybatis/mappers/userMapper.xml" />
 		<mapper resource="mybatis/mappers/blogMapper.xml" />
 		<mapper resource="mybatis/mappers/categoryMapper.xml" />
+		<mapper resource="mybatis/mappers/postMapper.xml" />
 	</mappers>
 </configuration>
