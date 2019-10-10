@@ -64,7 +64,6 @@ public class CategoryService {
 	 * 카테고리 조회
 	 */
 	public ApiResult<CategoryVo> selectCategoryByBlogId(CategoryVo categoryVo) {
-		// TODO: 쿼리 수정 - 해당 블로그의 카테고리별 포스트 수를 조회하는 쿼리 작성해야함
 		List<CategoryVo> list = categoryDao.selectByBlogId(categoryVo);
 		
 		return new ApiResult<>(list);

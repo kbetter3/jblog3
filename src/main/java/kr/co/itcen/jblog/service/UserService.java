@@ -8,7 +8,6 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import kr.co.itcen.jblog.repository.UserDao;
 import kr.co.itcen.jblog.result.ApiResult;
 import kr.co.itcen.jblog.type.ResponseCode;
-import kr.co.itcen.jblog.vo.BlogVo;
 import kr.co.itcen.jblog.vo.UserVo;
 
 @Service

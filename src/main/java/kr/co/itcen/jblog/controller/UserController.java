@@ -45,8 +45,9 @@ public class UserController {
 		// insert
 		ApiResult<UserVo> apiResult = userService.join(userVo);
 		
-		// TODO: insert 실패시 -> 삭제 고려해야함
+		// insert 실패시
 		if (!apiResult.isStatus()) {
+			errors.rejectValue("id", apiResult.getCode(), apiResult.getMessage());
 			return "user/join";
 		}
 		
@@ -78,7 +79,7 @@ public class UserController {
 		session.setAttribute("authUser", apiResult.getData());
 		// TODO: spring security 사용 검토
 	
-		// TODO: 로그인한 사용자 블로그로 이동할 수 있도록 처리해야함
+		// 로그인한 사용자 블로그로 이동
 		return "redirect:/" + apiResult.getData().getId();
 	}
 	

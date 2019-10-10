@@ -26,6 +26,9 @@ public class UserDao {
 		return session.selectOne("user.idDuplicationCheck", userVo);
 	}
 	
+	/**
+	 * 로그인
+	 */
 	public UserVo selectUserByIdAndPasswd(UserVo userVo) {
 		return session.selectOne("selectOneByUserIdAndPasswd", userVo);
 	}
