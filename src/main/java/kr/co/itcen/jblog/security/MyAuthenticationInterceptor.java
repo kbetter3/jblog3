@@ -33,7 +33,7 @@ public class MyAuthenticationInterceptor extends HandlerInterceptorAdapter {
 				if (request.getServletPath().startsWith("/api/")) {
 					// api 요청일 경우 json 형태로 return
 					Gson gson = new Gson();
-					ApiResult<Object> apiResult = new ApiResult<>(ResponseCode.FORBIDDEN);
+					ApiResult<Object> apiResult = new ApiResult<>(ResponseCode.UNAUTHORIZED);
 					
 					PrintWriter pw = response.getWriter();
 					pw.println(gson.toJson(apiResult));
