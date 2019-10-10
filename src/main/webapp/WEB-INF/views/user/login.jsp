@@ -20,7 +20,7 @@
       		<form:input path="id"/>
       		<form:errors path="id" cssStyle="color:red; display:block;" />
       		<label>패스워드</label>
-      		<input type="text" name="passwd">
+      		<input type="password" name="passwd">
       		<form:errors path="passwd" cssStyle="color:red; display:block;" />
       		<input type="submit" value="로그인">
 		</form:form>
