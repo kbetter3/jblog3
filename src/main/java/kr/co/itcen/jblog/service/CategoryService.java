@@ -1,7 +1,11 @@
 package kr.co.itcen.jblog.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import kr.co.itcen.jblog.repository.CategoryDao;
 import kr.co.itcen.jblog.result.ApiResult;
@@ -42,11 +46,27 @@ public class CategoryService {
 	/**
 	 * 카테고리 삭제
 	 */
+	@Transactional
 	public ApiResult<CategoryVo> deleteCategory(CategoryVo categoryVo) {
 		if (categoryDao.deleteCategory(categoryVo) == 1) {
-			return new ApiResult<>();	
+			// 카테고리 개수가 1개 미만일 경우 에러 발생
+			if (categoryDao.selectCntByBlogId(categoryVo) < 1) {
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				return new ApiResult<>(ResponseCode.CATEGORY_CAN_NOT_BE_LESS_THAN_ONE);
+			}
+			return new ApiResult<>();
 		} else {
 			return new ApiResult<>(ResponseCode.DB_ERROR);
 		}
+	}
+	
+	/**
+	 * 카테고리 조회
+	 */
+	public ApiResult<CategoryVo> selectCategoryByBlogId(CategoryVo categoryVo) {
+		// TODO: 쿼리 수정 - 해당 블로그의 카테고리별 포스트 수를 조회하는 쿼리 작성해야함
+		List<CategoryVo> list = categoryDao.selectByBlogId(categoryVo);
+		
+		return new ApiResult<>(list);
 	}
 }

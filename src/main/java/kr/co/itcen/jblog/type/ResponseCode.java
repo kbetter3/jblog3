@@ -36,6 +36,7 @@ public enum ResponseCode {
 	, CATEGORY_TITLE_NULL("30001", "response.code.category_title_null", "category title can not be null")		// 카테고리 TITLE이 null인 경우
 	, CATEGORY_TITLE_TOO_LONG("30002", "response.code.category_title_too_long", "category title too long")		// 카테고리 TITLE의 글자수 초과
 	, INVALID_CATEGORY_NO("30003", "response.code.invalid_category_no", "invalid category no")					// 잘못된 카테고리 no
+	, CATEGORY_CAN_NOT_BE_LESS_THAN_ONE("30004", "response.code.category_can_not_be_less_than_one", "category can not be less than one")	// 카테고리가 1개 미만일 경우
 	;
 	
 	private String code;

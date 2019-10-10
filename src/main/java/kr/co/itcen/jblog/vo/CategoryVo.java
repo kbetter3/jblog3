@@ -10,6 +10,7 @@ public class CategoryVo {
 	private int no;
 	private String title;
 	private String description;
+	private int postCnt;
 	private boolean useYn;
 	private Date regDate;
 	private String blogId;
@@ -69,5 +70,11 @@ public class CategoryVo {
 	}
 	public void setBlogId(String blogId) {
 		this.blogId = blogId;
+	}
+	public int getPostCnt() {
+		return postCnt;
+	}
+	public void setPostCnt(int postCnt) {
+		this.postCnt = postCnt;
 	}
 }

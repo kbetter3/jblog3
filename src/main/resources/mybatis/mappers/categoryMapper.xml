@@ -20,4 +20,22 @@
 		   and	blog_id=??
 		;
 	</update>
+	
+	<select id="selectByBlogId" parameterType="categoryVo" resultType="categoryVo">
+		select	no, title, description, reg_date, use_yn, blog_id
+		  from	category
+		 where	blog_id=#{blogId}
+		   and	use_yn=true
+		 order	by reg_date asc
+		;
+	</select>
+	
+	<select id="selectCntByBlogId" parameterType="categoryVo" resultType="int">
+		select	count(*)
+		  from	category
+		 where	blog_id=#{blogId}
+		   and	use_yn=true
+		 order	by reg_date asc
+		;	
+	</select>
 </mapper>
