@@ -43,7 +43,7 @@
 				<label class="l-float">서비스 약관에 동의합니다.</label>
 			</fieldset>
 			
-			<input type="submit" value="가입하기">
+			<input type="button" id="submit-btn" value="가입하기">
 		</form:form>
 	</div>
 	
@@ -53,6 +53,7 @@
 			$('#btn-checkemail').on('click', idDuplicationCheck)
 			
 			// TODO: id 중복체크 및 약관동의 후 submit 처리로직
+			$('#submit-btn').on('click', submitForm)
 		});
 		
 		// id 중복체크 완료 여부
@@ -70,7 +71,11 @@
 		// 아이디 중복 체크
 		function idDuplicationCheck() {
 			let userId = $('#blog-id').val()
-			console.log(userId);
+			
+			if (userId == '') {
+				alert('아이디를 입력해주세요.')
+				return
+			}
 			
 			$.ajax({
 				url: '${pageContext.request.contextPath}/api/user/idcheck',
@@ -83,12 +88,28 @@
 						idChecked = true
 						$('#img-checkemail').show()
 						$('#btn-checkemail').hide()
+					} else {
+						alert('이미 사용중인 아이디입니다.')
 					}
 				},
 				error: function(error) {
 					console.log('error: ', error)
 				}
 			})
+		}
+		
+		function submitForm() {
+			if (!idChecked) {
+				alert('아이디 중복확인을 해주세요.')
+				return
+			}
+			
+			if (!$('#agree-prov').prop('checked')) {
+				alert('서비스 이용약관에 동의해주세요.')
+				return
+			}
+			
+			$('#join-form').submit()
 		}
 	</script>
 </body>

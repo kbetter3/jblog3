@@ -13,7 +13,7 @@
 			<li class="selected">기본설정</li>
 		</c:when>
 		<c:otherwise>
-			<li><a href="${pageContext.request.contextPath}/${sessionScope.authUser.id}">기본설정</a></li>
+			<li><a href="${pageContext.request.contextPath}/${sessionScope.authUser.id}/admin">기본설정</a></li>
 		</c:otherwise>
 	</c:choose>
 

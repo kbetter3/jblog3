@@ -55,7 +55,7 @@ public class AdminController {
 	}
 	
 	@PostMapping({"", "/basic"})
-	public String basic(@ModelAttribute @PathVariable String userId, BlogVo blogVo, Errors errors, HttpSession session) {
+	public String basic(@ModelAttribute @PathVariable String userId, BlogVo blogVo, Errors errors, HttpSession session, Model model) {
 		// 본인여부 검사
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		
@@ -69,6 +69,7 @@ public class AdminController {
 		blogVo.updateValidCheck(errors);
 		
 		if (errors.hasErrors()) {
+			model.addAttribute("blogVo", blogVo);
 			return "blog/blog-admin-basic";
 		}
 		
@@ -93,6 +94,13 @@ public class AdminController {
 			return "redirect:/" + userId;
 		}
 		
+		// blog 정보 세팅
+		BlogVo blogVo = new BlogVo();
+		blogVo.setId(userId);
+		blogVo = blogService.selectBlogById(blogVo).getData();
+		
+		model.addAttribute("blogVo", blogVo);
+		
 		// blogId 세팅
 		CategoryVo categoryVo = new CategoryVo();
 		categoryVo.setBlogId(authUser.getId());
@@ -116,6 +124,12 @@ public class AdminController {
 		if (authUser.getId().equals(userId) == false) {
 			return "redirect:/" + userId;
 		}
+		
+		BlogVo blogVo = new BlogVo();
+		blogVo.setId(userId);
+		blogVo = blogService.selectBlogById(blogVo).getData();
+		
+		model.addAttribute("blogVo", blogVo);
 		
 		// 유효성 검사
 		postVo.createValidCheck(errors);
@@ -164,6 +178,12 @@ public class AdminController {
 		if (authUser.getId().equals(userId) == false) {
 			return "redirect:/" + userId;
 		}
+		
+		BlogVo blogVo = new BlogVo();
+		blogVo.setId(userId);
+		blogVo = blogService.selectBlogById(blogVo).getData();
+		
+		model.addAttribute("blogVo", blogVo);
 		
 		// category 조회 및 model 추가
 		CategoryVo categoryVo = new CategoryVo();
