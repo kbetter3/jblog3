@@ -75,7 +75,11 @@
 				dataType: 'json',
 				success: function(response) {
 					console.log(response)
-					removeCategory(categoryNo)
+					if (response.status) {
+						removeCategory(categoryNo)	
+					} else {
+						alert(response.message)
+					}
 				},
 				error: function(error) {
 					console.log('error', error)
@@ -89,8 +93,6 @@
 				description: $('#category-description').val()
 			}
 
-			console.log(category)
-
 			$.ajax({
 				url: '${pageContext.request.contextPath}/api/${sessionScope.authUser.id}/admin/category',
 				method: 'post',
@@ -100,7 +102,7 @@
 						clearInput()
 						createCategory(response.data)	
 					} else {
-						console.log('response: ', response)
+						alert('카테고리 저장에 실패하였습니다.')
 					}
 				},
 				error: function(error) {
@@ -148,8 +150,6 @@
 		}
 		
 		function removeCategory(categoryNo) {
-			let kk = $('#category-table').children('tr#cid-' + categoryNo)
-			console.log(kk)
 			$('#category-table tr').remove('#cid-' + categoryNo)
 		}
 	</script>
